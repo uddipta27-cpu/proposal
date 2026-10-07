@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1, user-scalable=1, minimum-scale=1, maximum-scale=5" name="viewport" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Antique:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
+
+  <!-- Update title and description for a birthday theme -->
+  <title>HBD 5.0 | Aoudumber Bade</title>
+  <link rel="icon" type="image/x-icon" href="https://www.palingit.com/favicon.ico" />
+  <meta name="description" content="A special birthday greeting" />
+</head>
+
+<body style="background: linear-gradient(to bottom, #ffe1e1, #ff217de0), url(r.jpg);
+    height: 100vh;">
+  <!-- YouTube player for background audio -->
+  <div id="ytplayer" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></div>
+
+  <div id="bodyblur">
+    <!-- Wallpaper -->
+    <img src="r.jpg" id="wallpaper" alt="Wallpaper" />
+  </div>
+
+  <div id="Content">
+    <div id="kadoIn">
+      <!-- Gift Button -->
+      <img src="Valentine-Surprise.png" alt="Open Gift Button" />
+    </div>
+    <p id="ket">
+      <span style="font-style: italic; color: rgb(0,0,0); margin-top: 3px !important; ">Open the gift, cutie:3</span>
+    </p>
+
+    <div class="kumpulanstiker" style="margin-top: 95px;">
+      <!-- Stickers for Content -->
+      <img src="mochi-blue-roses.gif" id="fotostiker" alt="Sticker" />
+      <img src="bb181648c115dfddfe1d0811baced67f.jpg" id="fotostiker1" alt="Photo 1" />
+      <img src="IMG20250611140404.jpg" id="fotostiker2" alt="Photo 2" />
+      <img src="IMG_20250420_144633_209.jpg" id="fotostiker3" alt="Photo 3" />
+      <img src="IMG_20250420_215407.jpg" id="fotostiker4" alt="Photo 4" />
+      <img src="IMG_20250626_093415.jpg" id="fotostiker5" alt="Photo 5" />
+      <img src="IMG_20250926_211712_379.jpg" id="fotostiker6" alt="Photo 6" />
+      <img src="IMG-20251025-WA0000.jpg" id="fotostiker7" alt="Photo 7" />
+      <img src="IMG-20250929-WA0002.jpg" id="fotostiker8" alt="Photo 8" />
+      <img src="IMG_20250331_005542.jpg" id="fotostiker9" alt="Photo 9" />
+      <img src="IMG-20250907-WA0002.jpg" id="fotostiker10" alt="Photo 10" />
+    </div>
+
+    <p id="halo" class="halo"></p>
+
+    <div>
+      <blockquote id="bq" data-text="💞">
+        <!-- Update the messages for a birthday greeting -->
+        <p id="kalimat">
+          Happy Birthday, gorgeous! Today is all about celebrating you.
+        </p>
+
+        <!-- Message -->
+        <p id="pesan1">Tap here for your birthday surprise! 🎉</p>
+        <div id="kolombaru">
+          <li id="lv1">🎂</li>
+          <li id="lv2">🎁</li>
+          <li id="lv3">🥳</li>
+          <li id="lv4">💖</li>
+        </div>
+
+        <p id="pesan2">You shine brighter every year! ✨</p>
+        <p id="pesan3">Do you know what makes today extra special?</p>
+        <p id="pesan4" class="sty2">It's your birthday!</p>
+        <p id="pesan5" class="sty2">
+          Today, I wish you a year filled with laughter, love, and unforgettable moments.
+        </p>
+        <p id="pesan6" class="sty2">
+          Remember, you deserve every happiness in the world. Celebrate big and enjoy every moment!
+        </p>
+
+        <!-- Next Button -->
+        <p id="opsL">Tap to continue the celebration!</p>
+      </blockquote>
+    </div>
+
+    <!-- Send Message Button -->
+    <div id="Tombol"><a id="By">&#128140; Next</a></div>
+
+    <!-- Rejected Message (if needed) -->
+    <div id="pesanditolak">
+      <img id="stikerditolak" src="https://feeldreams.github.io/weee.gif" />
+      <p id="kataditolak">
+        Oops! You can't skip this birthday magic.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // YouTube Iframe API setup for background music (Kinna Sona)
+    var ytPlayer;
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('ytplayer', {
+        height: '1',
+        width: '1',
+        videoId: '5qIJ7tQ2QbM',
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          loop: 1,
+          playlist: '5qIJ7tQ2QbM'
+        }
+      });
+    }
+
+    function playMusic() {
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        try {
+          ytPlayer.playVideo();
+        } catch (e) {
+          console.log('YouTube play error:', e);
+        }
+      }
+    }
+
+    const body = document.querySelector("body");
+    const swalst = Swal.mixin({
+      timer: 2300,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timerProgressBar: true,
+      imageHeight: 90,
+    });
+    ftganti = 0;
+    fungsi = 0;
+    fungsiAwal = 0;
+    deffotostiker = 'mochi-blue-roses.gif';
+    Content.style = "opacity:1;margin-top:16vh";
+    const swals = Swal.mixin({
+      allowOutsideClick: false,
+      cancelButtonColor: "#FF0040",
+      imageHeight: 80,
+    });
+
+    document.getElementById("kadoIn").onclick = function () {
+      if (fungsiAwal == 0) {
+        playMusic();
+        fungsiAwal = 1;
+        kadoIn.style =
+          "transition:all .8s ease;transform:scale(10);opacity:0";
+        wallpaper.style = "transform: scale(1.5);";
+        ket.style = "display:none";
+        setTimeout(initengahan, 300);
+        setTimeout(inipesan, 500);
+      }
+    };
+
+    async function inipesan() {
+      var { value: nama } = await swals.fire({
+        title: "What's your beautiful name?",
+        input: "text",
+      });
+      if (nama && nama.trim().length > 0 && nama.trim().length < 25) {
+        window.nama = nama.trim();
+        vketikhalo = "Happy Birthday, " + window.nama + "!";
+        mulainama();
+      } else {
+        await Swal.fire({
+          title: "Your name is lovely, but it seems a bit long.",
+          text: "Please enter a shorter name.",
+          icon: "warning",
+        });
+        inipesan();
+      }
+    }
+
+    var tanya = "How about we celebrate your birthday in style?";
+    var opstanya = "Your choice is:";
+    var tompositif = "Absolutely, let's celebrate! 🎉";
+    var tomnegatif = "Maybe another time";
+
+    async function pertanyaan() {
+      var { isConfirmed: prtanya } = await swals.fire({
+        title: nama + ", " + tanya,
+        text: "" + opstanya,
+        
+        showCancelButton: true,
+        confirmButtonText: "" + tompositif,
+        cancelButtonText: "" + tomnegatif,
+      });
+      if (prtanya) {
+        pesanwhatsapp = "Yes " + nama + ", let the birthday magic begin!";
+        menuju();
+      } else {
+        pesanwhatsapp = nama + ", don't miss out on the birthday fun!";
+        await swalst.fire({
+          title: "" + kataditolak.innerHTML,
+          timer: 2000,
+          imageUrl: "" + stikerditolak.src,
+        });
+        menuju();
+      }
+    }
+  </script>
+  <script src="a.js"></script>
+</body>
+
+</html>

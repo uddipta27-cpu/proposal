@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂✨</title>
+    <link rel="shortcut icon" href="Valentine-Surprise.png" type="image/png">
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Top Navigation & Controls Bar (Fixed, outside 3D carousel) -->
+    <header class="top-nav-bar">
+        <a href="index.html" class="nav-btn card-btn" title="View Greeting Card">💌 Card</a>
+        <button class="button" onclick="triggerConfetti()" aria-label="Trigger Confetti Surprise">🎉 Surprise Confetti! 🎁</button>
+        <button id="musicToggleBtn" class="nav-btn music-btn" onclick="toggleMusic()" title="Play / Pause Music" aria-label="Toggle Music">🎵</button>
+    </header>
+
+    <!-- 3D Rotating Carousel -->
+    <div id="drag-container">
+        <div id="spin-container">
+            <img src="bb181648c115dfddfe1d0811baced67f.jpg" alt="Birthday Memory 1">
+            <img src="IMG20250611140404.jpg" alt="Birthday Memory 2">
+            <img src="IMG_20250420_144633_209.jpg" alt="Birthday Memory 3">
+            <img src="IMG_20250420_215407.jpg" alt="Birthday Memory 4">
+            <img src="IMG_20250626_093415.jpg" alt="Birthday Memory 5">
+            <img src="IMG_20250926_211712_379.jpg" alt="Birthday Memory 6">
+            <img src="IMG-20251025-WA0000.jpg" alt="Birthday Memory 7">
+            <img src="IMG-20250929-WA0002.jpg" alt="Birthday Memory 8">
+            <img src="IMG_20250331_005542.jpg" alt="Birthday Memory 9">
+            <img src="IMG-20250907-WA0002.jpg" alt="Birthday Memory 10">
+            <p id="ground-text">Happy <span>Birthday</span> <span id="bday-name" class="highlight-name">SANCHARI</span></p>
+        </div>
+        <div id="ground"></div>
+    </div>
+
+    <!-- YouTube background music player container -->
+    <div id="ytplayer" style="position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; bottom: 0; right: 0;"></div>
+
+    <!-- Canvas for fireworks, floating hearts and sparkles -->
+    <div id="canva">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <!-- Define YouTube callback BEFORE loading YouTube iframe API -->
+    <script>
+        var ytPlayer = null;
+        var musicPlaying = false;
+
+        function updateMusicBtn() {
+            var btn = document.getElementById("musicToggleBtn");
+            if (btn) {
+                btn.innerHTML = musicPlaying ? "🎵" : "🔇";
+                btn.title = musicPlaying ? "Pause Music" : "Play Music";
+            }
+        }
+
+        window.onYouTubeIframeAPIReady = function() {
+            ytPlayer = new YT.Player('ytplayer', {
+                height: '1',
+                width: '1',
+                videoId: '5qIJ7tQ2QbM',
+                playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    loop: 1,
+                    playlist: '5qIJ7tQ2QbM'
+                },
+                events: {
+                    'onReady': function(e) {
+                        try {
+                            e.target.playVideo();
+                            musicPlaying = true;
+                            updateMusicBtn();
+                        } catch (err) {}
+                    },
+                    'onStateChange': function(e) {
+                        if (e.data === 1) {
+                            musicPlaying = true;
+                        } else if (e.data === 2 || e.data === 0) {
+                            musicPlaying = false;
+                        }
+                        updateMusicBtn();
+                    }
+                }
+            });
+        };
+
+        function ensureAudio() {
+            if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+                try {
+                    ytPlayer.playVideo();
+                    musicPlaying = true;
+                    updateMusicBtn();
+                } catch(e) {}
+            }
+        }
+
+        function toggleMusic() {
+            if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') return;
+            try {
+                if (musicPlaying) {
+                    ytPlayer.pauseVideo();
+                    musicPlaying = false;
+                } else {
+                    ytPlayer.playVideo();
+                    musicPlaying = true;
+                }
+                updateMusicBtn();
+            } catch (e) {
+                console.log('Music toggle error:', e);
+            }
+        }
+
+        document.addEventListener('pointerdown', function() {
+            if (!musicPlaying) ensureAudio();
+        }, { once: true });
+
+        // Update the recipient name from URL parameters or localStorage
+        (function personalizeName() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryName = urlParams.get('name');
+            var savedName = "";
+            try { savedName = localStorage.getItem('birthdayName'); } catch(e) {}
+            var finalName = (queryName || savedName || 'SANCHARI').trim();
+            if (finalName) {
+                var el = document.getElementById('bday-name');
+                if (el) el.textContent = finalName.toUpperCase();
+                document.title = "Happy Birthday " + finalName + "! 🎂✨";
+            }
+        })();
+
+        function triggerConfetti() {
+            ensureAudio();
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 90,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+                setTimeout(function() {
+                    confetti({
+                        particleCount: 50,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0, y: 0.7 }
+                    });
+                    confetti({
+                        particleCount: 50,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1, y: 0.7 }
+                    });
+                }, 250);
+            }
+        }
+    </script>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.browser.min.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        // High quality celebratory background fireworks & floating hearts animation
+        window.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById("canvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            function random(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            // Burst Particle for Fireworks
+            function FireworkParticle(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.radius = random(1.5, 3.5);
+                this.color = color;
+                const angle = random(0, Math.PI * 2);
+                const speed = random(1.5, 5);
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.alpha = 1;
+                this.decay = random(0.015, 0.03);
+            }
+
+            FireworkParticle.prototype.draw = function () {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
+            };
+
+            FireworkParticle.prototype.update = function () {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.05; // gravity
+                this.alpha -= this.decay;
+            };
+
+            function createFirework(x, y) {
+                const colors = ['#ff217d', '#ff9a3c', '#ffe600', '#00e5ff', '#ff3860', '#ff6584', '#ffffff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const count = Math.floor(random(25, 45));
+                for (let i = 0; i < count; i++) {
+                    particles.push(new FireworkParticle(x, y, color));
+                }
+            }
+
+            // Floating Heart
+            function Heart(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = random(16, 32);
+                const colors = ['#ff2a6d', '#ff5e7e', '#ff758c', '#ff217d', '#ff4081'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.vy = random(-1.8, -0.8);
+                this.vx = random(-0.5, 0.5);
+                this.opacity = 1;
+                this.decay = random(0.004, 0.009);
+            }
+
+            Heart.prototype.draw = function () {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, Math.min(1, this.opacity));
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.bezierCurveTo(this.x - this.size / 2, this.y - this.size / 2, this.x - this.size, this.y + this.size / 3, this.x, this.y + this.size);
+                ctx.bezierCurveTo(this.x + this.size, this.y + this.size / 3, this.x + this.size / 2, this.y - this.size / 2, this.x, this.y);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
+            };
+
+            Heart.prototype.update = function () {
+                this.y += this.vy;
+                this.x += this.vx + Math.sin(this.y * 0.02) * 0.4;
+                this.opacity -= this.decay;
+            };
+
+            let particles = [];
+            let hearts = [];
+
+            // Spawn firework on click / tap anywhere on canvas
+            window.addEventListener('pointerdown', function (e) {
+                if (e.target.closest && e.target.closest('button, a')) return;
+                createFirework(e.clientX, e.clientY);
+                hearts.push(new Heart(e.clientX, e.clientY - 20));
+            });
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Periodic fireworks
+                if (Math.random() < 0.035) {
+                    createFirework(random(canvas.width * 0.1, canvas.width * 0.9), random(canvas.height * 0.15, canvas.height * 0.6));
+                }
+
+                // Periodic hearts
+                if (Math.random() < 0.04) {
+                    hearts.push(new Heart(random(0, canvas.width), canvas.height + 20));
+                }
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].draw();
+                    particles[i].update();
+                    if (particles[i].alpha <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+
+                for (let i = hearts.length - 1; i >= 0; i--) {
+                    hearts[i].draw();
+                    hearts[i].update();
+                    if (hearts[i].opacity <= 0 || hearts[i].y < -50) {
+                        hearts.splice(i, 1);
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        });
+    </script>
+</body>
+</html>
